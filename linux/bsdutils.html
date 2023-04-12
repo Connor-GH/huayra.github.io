@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BSD user utilities on Linux</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+    </head>
+      <body>
+   	    <header>
+     	    <h1>Huayra's Website - BSDutils</h1>
+        </header>
+   	  <p>BSDutils on Linux
+   	    <br>
+   	    <br>FreeBSD is an operating system, unlike Linux. Inside of FreeBSD, there
+   	    <br>lies a custom kernel, init system, TCP/IP stack, and user utilities, among
+        <br>other things. Linux by itself is just a kernel, and cannot function as its
+   	    <br>own operating system. It is common for Linux to be paired with GNU coreutils
+   	    <br>to provide a sensible userland; however, this leads to a lack of competition
+   	    <br>and "vendor lock-in" of GNU in the modern day.
+        <br>
+        <br>A modern Linux user should have the option to choose multiple utilities without
+   	    <br>fear of system breakages. Sure, BusyBox, Toybox, uutils, and others exist, but
+   	    <br>they are not without their absence of GNU features or presence of inferior
+   	    <br>performance.
+   	    <br>
+   	    <br>The alternative, then, is to use FreeBSD's coreutils, or other coreutils that abide
+   	    <br>more to original UNIX than deviating from it. Majority of the internet infrastructure
+   	    <br>(including those that serve this website) use UNIX-like operating systems. BSD is a
+   	    <br>direct derivative of UNIX, having come from the Electrical Engineering and Computer Science
+        <br>division of the University of California, Berkeley.
+   	    <br>
+   	    <br>With FreeBSD being the most popular BSD fork, it can be reasonably determined that it would
+   	    <br>be a perfect candidate for replacing GNU coreutils, as the coreutils on Linux are the most
+   	    <br>popular utilities in its domain.
+   	    <br>
+   	    <br>There are multiple reasons to pursue replacing coreutils; namely, GNU coreutils are some of
+   	    <br>the largest in terms of binary size. GNU products also tend to have the most restrictive
+   	    <br>options when it comes to compilers, as many GNU projects only compile with GCC, the GNU
+   	    <br>Compiler Collection (or GNU C Compiler). Another argument for replacing the coreutils, then,
+   	    <br>could be license choice. The GNU GPL is not attractive for embedded companies who do not
+   	    <br>commit back source code as a means of making a profit; rather, it is preferred to create
+   	    <br>new source code under the company's domestic programmers, or use projects with permissive
+   	    <br>licenses, like the Apache, MIT, or BSD family. The likes of Google use Apache products in
+   	    <br>their applications to not rewrite code that has already been written. At the same time,
+   	    <br>Google is one of the largest contributors to the Linux kernel as of 2023, and projects such
+   	    <br>as ChromeOS, Android, and Chrome all have their open source counterparts.
+   	    <br>
+   	    <br>Attaching permissive coreutils to Linux means that companies that frequently work with embedded
+   	    <br>projects will not have to give back source code for them. This is a good thing, because it
+        <br>encourages competition in a market that has none (but used to - see SunOS, AT&T UNIX, SRV4, etc).
+        <br>
+        <br>Finally, one can go about replacing their coreutils by using BSDutils, made by <a href="https://github.com/dcantrell/bsdutils">dcantrell on GitHub.</a>
+        <br>Alternatively, I have a <a href="https://github.com/Connor-GH/bsdutils">fork.</a>
+    </p>
+    </body>
+</html>
