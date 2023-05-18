@@ -10,9 +10,13 @@
     </header>
     <p>
         What is an Exokernel?
-
+    <br>
+    <br>
+    <br>
     Background:
-
+    <br>
+    <br>
+    <br>
     In order to understand what an Exokernel is, it is important to understand
     what a kernel is. A kernel simply manages resources for applications. It is
     an important job of the kernel to make sure userspace applications do not
@@ -24,7 +28,8 @@
     has the ability to manipulate their hardware outside of the kernel's control.
     A kernel may also supply generic and primitive drivers for devices like serial
     and PS/2 input devices.
-
+    <br>
+    <br>
     There are examples of kernels that move all of the drivers into a userland -
     that is, away from the kernel - and into pseudo-containers, where the kernel
     watches the drivers' actions closely and "relaunches" a driver if it fails as
@@ -33,10 +38,13 @@
     Tanenbaum et al.'s Minix, Carnegie Mellon University's Mach, the GNU Foundation's
     Hurd, etc. To an extent, both MacOS XNU and Windows NT use a microkernel in the
     sense that there is a hybrid of drivers in userspace and drivers in the kernel.
-
-
+    <br>
+    <br>
+    <br>
     Exokernel:
-
+    <br>
+    <br>
+    <br>
     The Exokernel was an idea originally developed by the MIT Parallel and Distributed
     Operating Systems group (P&amp;D OS) with the goal of improving performance
     and scaling on systems that needed it, such as web servers and file servers.
@@ -49,7 +57,8 @@
     no cost because the compiler will just replace every occurrance of SEGMENT_ADDRESS
     with the real address that the identifier is representing. Most driver abstractions,
     however, have cost.
-
+    <br>
+    <br>
     A VGA driver in a kernel might expose a lone clear_screen()
     for clearing all of the screen; this might have fulfilled the purpose that the
     original developers sought for the kernel, but an application developer might
@@ -60,7 +69,8 @@
     mean that it suits the needs for all developers; therefore, it is valuable
     for an application developer to have the ability to choose their own
     abstractions and pay for their runtime proportionally.
-
+    <br>
+    <br>
     Consider the following example as well: a kernel developer writes a memory
     mapping table and maps all physical pages of memory to a virtual page of
     memory, plus an arbitrary offset. For an embedded developer that works on
@@ -72,7 +82,8 @@
     development team could develop or use a libraryOS that fits their model
     of abstractions needed for their project, saving them development time
     and effort.
-
+    <br>
+    <br>
     There is also the very specific but developer-familiar problem of
     compilation time. Compiling code takes a relatively long time, which
     leaves the application developer to contemplate whether there are faster
@@ -84,7 +95,8 @@
     wait time due to the time-allocation method that exokernels like Aegis
     and XOK use. In doing so, the application develoer will spend significantly
     less time compiling code, making their workflow more productive.
-
+    <br>
+    <br>
     An exokernel addresses the potential issue of direct hardware access by
     leaving secure bindings in the kernel for hardware resources. An exokernel
     may have a fairly primitive CPU scheduler - a time-sharing scheduler -
@@ -100,7 +112,8 @@
     In general, no operation related to hardware would skip passing through the
     kernel; the operation would just pass through less of the kernel due to
     the reduced amount of code needed inside of it.
-
+    <br>
+    <br>
     Overall, an exokernel minimizes the need for kernel-level abstractions, and
     instead offloads this to the userland and kernel bindings, where it can be
     application-specific, this speeding up the execution time of programs
