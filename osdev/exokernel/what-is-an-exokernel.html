@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Huayra Website</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  </head>
+  <body>
+    <header>
+      <h1>Huayra's Website - What is an Exokernel?</h1>
+    </header>
+    <p>
+        What is an Exokernel?
+
+    Background:
+
+    In order to understand what an Exokernel is, it is important to understand
+    what a kernel is. A kernel simply manages resources for applications. It is
+    an important job of the kernel to make sure userspace applications do not
+    interfere with each other in a potentially harmful manner, such as the
+    poisoning of a CPU's registers (see: <a href="https://lkml.org/lkml/2023/2/22/33">AMD Ryzen Zen 2's XSAVE vulnerabilities</a>).
+    An operational kernel must know more knowledge about the hardware than other
+    applications so that it probably has more control over the hardware than an
+    ordinary user; after all, it is probably a bad idea if an inexperienced user
+    has the ability to manipulate their hardware outside of the kernel's control.
+    A kernel may also supply generic and primitive drivers for devices like serial
+    and PS/2 input devices.
+
+    There are examples of kernels that move all of the drivers into a userland -
+    that is, away from the kernel - and into pseudo-containers, where the kernel
+    watches the drivers' actions closely and "relaunches" a driver if it fails as
+    if it were a normal program. This type of driver-isolated kernel is called a
+    microkernel, and it is the basis for many operating systems, such as Andrew
+    Tanenbaum et al.'s Minix, Carnegie Mellon University's Mach, the GNU Foundation's
+    Hurd, etc. To an extent, both MacOS XNU and Windows NT use a microkernel in the
+    sense that there is a hybrid of drivers in userspace and drivers in the kernel.
+
+
+    Exokernel:
+
+    The Exokernel was an idea originally developed by the MIT Parallel and Distributed
+    Operating Systems group (P&amp;D OS) with the goal of improving performance
+    and scaling on systems that needed it, such as web servers and file servers.
+    An Exokernel's goal is to remove the abstraction caused by having drivers in the
+    kernel. When writing drivers, the main goal is normally to expose hardware
+    resources in a more humanly-readable format. No programmer wants to remember the
+    memory address for a specific segment in memory; rather, they will use some
+    identifier - something like SEGMENT_ADDRESS - and typically forget about where
+    that segment actually is in memory. This is an example of an abstraction that has
+    no cost because the compiler will just replace every occurrance of SEGMENT_ADDRESS
+    with the real address that the identifier is representing. Most driver abstractions,
+    however, have cost.
+
+    A VGA driver in a kernel might expose a lone clear_screen()
+    for clearing all of the screen; this might have fulfilled the purpose that the
+    original developers sought for the kernel, but an application developer might
+    be disappointed in the lack of driver call for clearing a single pixel. In
+    an exokernel environment, an application developer would choose a libraryOS -
+    a library of abstractions and bindings to the kernel - that best suits their
+    needs. Just because a function suits the needs of most developers does not
+    mean that it suits the needs for all developers; therefore, it is valuable
+    for an application developer to have the ability to choose their own
+    abstractions and pay for their runtime proportionally.
+
+    Consider the following example as well: a kernel developer writes a memory
+    mapping table and maps all physical pages of memory to a virtual page of
+    memory, plus an arbitrary offset. For an embedded developer that works on
+    WiFi routers, it would be important to have memory directly mapped "1:1",
+    so that the first virtual page corresponds to the first physical page;
+    after all, these devices might have 32MB of RAM, and so every byte matters
+    in order to fit as many features on the devices as possible. Rather than
+    writing a new operating system and kernel for that WiFi router, the
+    development team could develop or use a libraryOS that fits their model
+    of abstractions needed for their project, saving them development time
+    and effort.
+
+    There is also the very specific but developer-familiar problem of
+    compilation time. Compiling code takes a relatively long time, which
+    leaves the application developer to contemplate whether there are faster
+    compilation methods. Compiling without optimizations saves a significant
+    amount of time, but ultimately leaves the developer with a sub-optimally
+    performing program. The exokernel offers the potential solution of
+    cutting most abstractions altogether, and just writing code directly to
+    disk, directly accessing memory blocks, and having a very predictable cpu
+    wait time due to the time-allocation method that exokernels like Aegis
+    and XOK use. In doing so, the application develoer will spend significantly
+    less time compiling code, making their workflow more productive.
+
+    An exokernel addresses the potential issue of direct hardware access by
+    leaving secure bindings in the kernel for hardware resources. An exokernel
+    may have a fairly primitive CPU scheduler - a time-sharing scheduler -
+    that splits up CPU time between applications based on priority level. In
+    limiting CPU time for an application, no single application can take over
+    the system by a kernel fault; if an application is using too much CPU time,
+    the kernel will simply halt its work, save the registers for that application,
+    and swap to another process. In the case of memory, an exokernel would
+    allocate certain pages to programs and occasionally ask for the memory to
+    be taken back if it is not being used. If an application is requesting
+    memory too frequently or not giving back its unallocated pages, the kernel
+    will simply take its resources back, preserving the security of the kernel.
+    In general, no operation related to hardware would skip passing through the
+    kernel; the operation would just pass through less of the kernel due to
+    the reduced amount of code needed inside of it.
+
+    Overall, an exokernel minimizes the need for kernel-level abstractions, and
+    instead offloads this to the userland and kernel bindings, where it can be
+    application-specific, this speeding up the execution time of programs
+    significantly. Security is handled through basic hardware management and
+    revocation, which proves to be a reliable system for preventing kernel
+    lock-ups and panics.
+    </p>
+  </body>
+</html>
