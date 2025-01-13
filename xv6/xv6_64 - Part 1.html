@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+	  <title>xv6_64 - Part 1</title>
+		<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	</head>
+	<body>
+	  <header>
+		  <h1>Huayra's Website - xv6_64 - Part 1</h1>
+		</header>
+	</body>
+	<p>
+		Humble Beginnings<br>
+
+		My previous project, <a href="https://github.com/connor-gh/relics">relics</a>,
+		was a massive failure. That self-proclaimed "exokernel" couldn't even get
+		into userland! On a good day, it would kernel panic if built with O2 (it failed to
+		build without optimizations -- a sign of bad software). On a bad day, you would
+		chase down a bug for <b>eleven months</b>. Yeah. I spent 11 months trying to
+		figure out why interrupts wouldn't work. The bug was, of course, a single
+		line of code. This project wasn't even in the stages where it could be able
+		to be used with a debugger, so any debugging had to happen with printf.
+		What's worse is that CPUs execute very fast and sometimes out-of-order.
+		This sometimes results in a triple fault and reset in qemu before the code
+		before it could execute debug printfs. Code like <code>printf("Foo"); triple_fault();</code>
+		might not even print "Foo" at all! Talk about a debugging nightmare.<br>
+
+		One night, out of frustration, I gave up. I decided that I like osdev,
+		but I don't like the OS I made from scratch. It didn't do nearly what I
+		wanted and couldn't ever be made to do so. So I took to the internet in
+		search of easy-to-learn educational operating systems, and someone
+		suggested xv6: a small operating system made by the MIT PDOS group that
+		tried to be a small UNIX-like system, while still being teachable.
+		Armed with this knowledge, I looked through the code and determined it
+		to be good if I could make it work.<br>
+
+		Oh man, I did not know what I would get myself into with this project.
+		At the time of forking, xv6 had been effectively dead for 8-18 years,
+		depending on who you ask. The final nail was put in the coffin when they
+		put a message in the README saying that the project was no longer maintained.
+		When trying to build this outdated project, gcc will throw a million errors
+		at you, talking about one for infinite recursion in sh.c, another for some
+		old-style C, and so forth. Once you finally get the thing to build, it
+		doesn't run! Luckily,
+		<a href="https://github.com/mit-pdos/xv6-public/pull/155">some savior in the PRs</a>
+		commented a fix, and I was back to business. After I got it to build, I
+		called it good and pushed my fork to my own branch, <code>relics</code>, named
+		after my previous operating system attempt. I ran <code>clang-format</code> on
+		the source with the style of the linux kernel -- my favorite style.
+		After that, I separated the .c files for the kernel space and userspace
+		into directories and added some Makefiles in those directories to better
+		separate them. This would later prove integral as userspace quickly
+		diverged, needing many different CFLAGS from the kernel. If you look
+		in kernel/boot/, you will find initcode64.S. This is a 64-bit port of
+		initcode.S found in the original build of xv6. Its relevance is that
+		it is technically userspace code and has no business being in the
+		kernel directory (much less kernel/boot), but I have gotten used to
+		it there, so I don't care to move it. It's not like userspace doesn't
+		use assembly because it does: usys.S.<br>
+
+		Anyway, I should wrap this up. This blog is only supposed to go over
+		the initial history of xv6_64, specifically <b>the first day</b>.
+		All of this work was done in one day! I will do this for every blogpost,
+		but the relevant commits are at the bottom of this post for proof.<br>
+
+	</p>
+	<pre>
+		commit 767541ca11cbec02d42a7a7cd52023188196c7a8
+		Author: Connor
+		Date:   Sun May 26 16:42:48 2024 -0500
+
+		Clang fixes
+
+		commit e5e5004333b352556e3cb7f9b8ed3c2e0c875d49
+		Author: Connor
+		Date:   Sat May 25 22:05:37 2024 -0500
+
+		gitignore oops
+
+		commit b143cd269ac42f7c7d5d8ffff8fdca5496775e30
+		Author: Connor
+		Date:   Sat May 25 22:02:43 2024 -0500
+
+		Organize folders more
+
+		commit 70377e7da44c40c1495c0070680d8e98eac1b5b4
+		Author: Connor
+		Date:   Sat May 25 02:19:55 2024 -0500
+
+		Clang-format update
+
+		commit adb31a31455d08b59f99bf36039548c8c58577e4
+		Author: Connor
+		Date:   Sat May 25 02:09:58 2024 -0500
+
+		Initial fork
+
+		commit eeb7b415dbcb12cc362d0783e41c3d1f44066b17 (origin/master, origin/HEAD)
+		Author: Frans Kaashoek
+		Date:   Mon Aug 10 14:28:02 2020 -0400
+
+		Be more explicit that we are not maintaining the x86 version anymore
+	</pre>
+
+</html>
+
